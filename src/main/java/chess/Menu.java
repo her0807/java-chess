@@ -18,4 +18,8 @@ public enum Menu {
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException("올바르지 않은 메뉴입니다."));
 	}
+
+	public boolean isStart() {
+		return this == START;
+	}
 }
