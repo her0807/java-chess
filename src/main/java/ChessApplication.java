@@ -1,6 +1,6 @@
 import static chess.view.OutputView.printGuideStart;
 
-import chess.Menu;
+import chess.view.Menu;
 import chess.domain.board.Board;
 import chess.view.InputView;
 import chess.view.OutputView;
