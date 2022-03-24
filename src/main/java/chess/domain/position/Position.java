@@ -3,6 +3,7 @@ package chess.domain.position;
 import chess.domain.piece.Direction;
 import java.util.Objects;
 
+
 public class Position {
 
     private final Row row;
@@ -43,6 +44,10 @@ public class Position {
 
     private boolean check(float target) {
         return target == 0 || target == 1 || target == -1;
+    }
+
+    public Position createPathPosition(Direction direction){
+        return new Position(row.move(direction),column.move(direction));
     }
 
     @Override

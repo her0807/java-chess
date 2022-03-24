@@ -26,7 +26,7 @@ public class BishopTest {
     @DisplayName("이동 불가능")
     @ParameterizedTest
     @CsvSource(value = {"a1,b3", "b3,a1"})
-    void movable_fasle(String toValue, String fromValue) {
+    void movable_false(String toValue, String fromValue) {
         Position to = new Position(toValue);
         Position from = new Position(fromValue);
 
