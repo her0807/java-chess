@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Direction;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -21,6 +22,47 @@ public class Board {
         initWhitePieces();
         initBlackPieces();
     }
+
+    private void initOneLine(Column column, Piece piece) {
+        for (Row row : Row.values()) {
+            board.put(new Position(row, column), piece);
+        }
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
+
+    public void move(Position from, Position to) {
+        Piece piece = board.get(from);
+        // TODO - if piece.movable
+
+        if (piece.movable(from, to) && hasOtherPiece(from, to, piece.findDirection(from, to))) {
+            board.put(to, piece);
+            board.remove(from);
+        }
+    }
+
+    private boolean hasOtherPiece(Position from, Position to, Direction direction) {
+        Position current = from.createPathPosition(direction);
+        do {
+            if (board.get(current) != null) {
+                return false;
+            }
+            current = current.createPathPosition(direction);
+        } while (!current.equals(to));
+        return true;
+    }
+
+
+    public boolean isEmpty() {
+        return board.isEmpty();
+    }
+
+    public boolean hasPositionInPiece(Position position, Piece piece) {
+        return board.get(position) instanceof Queen;
+    }
+
 
     private void initBlackPieces() {
         board.put(new Position(Row.A, Column.EIGHT), new Rook(Team.BLACK));
@@ -46,26 +88,5 @@ public class Board {
         board.put(new Position(Row.H, Column.ONE), new Rook(Team.WHITE));
 
         initOneLine(Column.TWO, new Pawn(Team.WHITE));
-    }
-
-    private void initOneLine(Column column, Piece piece) {
-        for (Row row : Row.values()) {
-            board.put(new Position(row, column), piece);
-        }
-    }
-
-    public Map<Position, Piece> getBoard() {
-        return board;
-    }
-
-    public void move(Position from, Position to) {
-        Piece piece = board.get(from);
-        // TODO - if piece.movable
-        board.put(to, piece);
-        board.remove(from);
-    }
-
-    public boolean isEmpty() {
-        return board.isEmpty();
     }
 }
